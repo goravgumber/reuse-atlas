@@ -29,6 +29,8 @@ If the host lacks search, say so. Use the optional `scripts/github_search.py` on
 
 Treat search snippets as leads. For each serious candidate, inspect its README/docs, repository layout, relevant source entry points, manifests, APIs/data models, tests where useful, license, releases, and maintenance evidence when accessible. Record direct links and paths/symbols only after inspecting them. Mark each capability **implemented**, **partial**, **planned**, or **unknown/not verified**. Missing documentation is not proof of absence. Do not invent stacks, code paths, features, dates, or metrics.
 
+For maintenance claims, cite a dated release, tag, or commit from the project's own history. Include the year (prefer an ISO date) and distinguish a release date from a commit date. If the source omits the year or the history cannot be reached, label the date or status unknown; an unavailable page alone is not evidence of abandonment. Prefer commit-pinned source links for code citations when available; otherwise name the branch/ref and date checked.
+
 Shortlist the strongest three to five credible candidates when available. Compare functional coverage, implementation completeness, architecture, client/server, data, APIs, auth, integrations, stack, docs, tests/readiness, deployment, maintenance/community evidence, and license fit. Popularity is secondary to suitability.
 
 ### 4. Map reuse at implementation level
