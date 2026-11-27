@@ -12,7 +12,7 @@ import json
 import os
 import sys
 from urllib.error import HTTPError, URLError
-from urllib.parse import quote, urlencode
+from urllib.parse import urlencode
 from urllib.request import Request, urlopen
 
 API_URL = "https://api.github.com/search/repositories"
@@ -86,7 +86,8 @@ def main() -> int:
         print(json.dumps({"error": str(exc), "query": args.query, "success": False}), file=sys.stderr)
         return 1
     result["success"] = True
-    print(json.dumps(result, indent=2, ensure_ascii=False))
+    # Escaping Unicode keeps JSON printable in terminals with legacy encodings.
+    print(json.dumps(result, indent=2, ensure_ascii=True))
     return 0
 
 
