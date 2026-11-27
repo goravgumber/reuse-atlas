@@ -94,3 +94,31 @@ These eight fresh sessions provide reproducible prompts, source links, search-ev
 ## Automated release checks
 
 Checked the existing pull-request workflow in `.github/workflows/validate.yml` and ran its three Python commands on this Windows host: `python skills/reuse-atlas/scripts/validate_skill.py` passed; `python -m unittest discover -s tests -v` passed (3 tests); `python -m compileall -q skills/reuse-atlas/scripts tests` passed. `git diff --check` passed. The workflow also defines the same checks on Ubuntu and Windows for pull requests into `develop` or `main`; those hosted matrix jobs must complete on the PR before release readiness is reconsidered. No automated test was added because the new manual evaluations test agent behavior rather than deterministic helper behavior.
+
+## E15 — Real-world URL-shortener discovery (Codex Desktop)
+
+- **Date:** 2026-11-27
+- **Host:** Codex Desktop on Windows
+- **Exact application build/model:** Not captured
+- **Skill explicitly invoked:** Yes — the prompt began “Use ReuseAtlas first.”
+- **Prompt:** Request a self-hosted URL shortener with custom domains, analytics, QR codes, authentication, and an admin dashboard; inspect open-source projects and implementations, compare features/stacks/licenses, provide a reuse map and recommendation, and do not code.
+- **Candidates:** Kutt, Shlink, Dub, and YOURLS.
+- **Main outputs:** Requirement summary, discovery scope, capability table, architecture/stack comparison, license observations, implementation reuse map, Mermaid architecture, gaps/risks, and the verdict **ADAPT Kutt**. The report is recorded at [`docs/examples/url-shortener-discovery.md`](../docs/examples/url-shortener-discovery.md).
+- **Implementation:** None. No candidate repository was integrated or run.
+- **Observed limitations:** Several Kutt capabilities were supported by README statements but exact implementation paths for authentication, QR, and admin functions were not verified. QR behavior in Shlink v5 needed a precise distinction: the old server URL route was removed, while client-side generation remains. Dub requires path-level license review. The run does not prove exhaustive discovery or automatic skill activation.
+- **Classification:** Successful end-to-end discovery demonstration with **partial implementation-evidence completeness**. Do not count as a fully passed source-verification evaluation.
+
+## E16 — Automatic activation on a fresh Codex session
+
+- **Date:** 2026-11-27
+- **Status:** Automatic activation observed in this fresh Codex CLI run; evidence-depth review remains partial.
+- **Host:** Codex CLI `0.171.0-alpha.13.2` on Windows, run with `codex exec --ephemeral --sandbox read-only`.
+- **Fresh-session evidence:** A new ephemeral thread was started; no prior session was resumed.
+- **Model:** Not captured.
+- **Purpose:** Test whether the skill activates without the user naming it.
+- **Exact prompt:** “I want to build a self-hosted URL shortener with custom domains, analytics, QR codes, authentication and an admin dashboard. Research existing implementations and give me your recommendation before coding.”
+- **Activation evidence:** The first agent message said it would use the reuse-atlas workflow, and the session read `C:\Users\gorav\.agents\skills\reuse-atlas\SKILL.md` before researching. The prompt did not mention ReuseAtlas.
+- **Observed research:** It reviewed the existing workspace, opened project pages for Kutt, Shlink, YOURLS, and Dub, compared requested capabilities, produced a reuse map, and recommended **ADAPT Kutt**.
+- **Implementation:** None; read-only session.
+- **Limitations:** The generated report relied mainly on README, documentation, and repository structure; it did not inspect relevant implementation files for each candidate. Treat activation as observed for this Codex CLI build only, not as a general guarantee. This does not test automatic activation in Codex Desktop or Claude Code.
+- **Classification:** Activation behavior **Pass for this run**; evidence-depth quality **Partial**. Record separately from E15, whose prompt explicitly invoked the skill.
