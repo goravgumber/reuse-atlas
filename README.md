@@ -1,121 +1,195 @@
+<div align="center">
+
 # ReuseAtlas
 
-**Map what exists. Reuse what works. Build what matters.**
+### Don't build it twice.
 
-ReuseAtlas is a portable Agent Skill for researching existing software before an agent builds a new product or substantial feature. It helps turn a list of search results into an evidence-backed decision: what to use, integrate, harvest, adapt, or build.
+Discover what's already built before your AI agent starts coding.
 
-## Why it exists
+An open-source, research-first Agent Skill for comparing existing implementations and deciding what to reuse before building a substantial project.
 
-Coding agents can start implementing from a short prompt before checking whether a useful implementation already exists. Finding a similar project is only the first step: its feature may be planned rather than shipped, its license may not fit, or it may not expose an integration point. ReuseAtlas asks the agent to verify candidates and map specific reusable capabilities before recommending a direction.
+[![GitHub stars](https://img.shields.io/github/stars/goravgumber/reuse-atlas?style=social)](https://github.com/goravgumber/reuse-atlas)
+[![GitHub forks](https://img.shields.io/github/forks/goravgumber/reuse-atlas?style=social)](https://github.com/goravgumber/reuse-atlas/forks)
+[![Release](https://img.shields.io/github/v/release/goravgumber/reuse-atlas?include_prereleases&label=release)](https://github.com/goravgumber/reuse-atlas/releases)
+[![MIT License](https://img.shields.io/github/license/goravgumber/reuse-atlas)](LICENSE)
+[![Validate](https://github.com/goravgumber/reuse-atlas/actions/workflows/validate.yml/badge.svg?branch=main)](https://github.com/goravgumber/reuse-atlas/actions/workflows/validate.yml)
+[![Agent Skills](https://img.shields.io/badge/Agent_Skills-portable%20format-6e40c9)](https://agentskills.io/)
+[![Codex CLI](https://img.shields.io/badge/Codex_CLI-tested%20with%20limitations-informational?logo=openai)](evals/results.md)
+[![Claude Code](https://img.shields.io/badge/Claude_Code-activation%20unverified-lightgrey?logo=anthropic)](#supported-agents)
 
-## How the workflow works
+[Overview](#overview) · [Live demonstration](#see-reuseatlas-in-action) · [Workflow](#workflow) · [Installation](#installation) · [Evaluations](#evaluations) · [Development](#development)
+
+</div>
+
+## Overview
+
+Coding agents can start implementing a project before checking whether useful software already exists. ReuseAtlas guides the agent to discover candidate projects, inspect primary sources, compare capabilities and licenses, then map the reusable parts and remaining work.
+
+Its central output is an **implementation reuse map**: a source-backed account of what can be used, integrated, adapted, or built, with compatibility gaps and license notes. Research is bounded and read-only; it is not an exhaustive search engine or project scaffolder.
+
+ReuseAtlas is a portable [Agent Skill](https://agentskills.io/) with one canonical copy at [`skills/reuse-atlas/SKILL.md`](skills/reuse-atlas/SKILL.md). It uses search and reading tools supplied by the host agent.
+
+## Workflow
 
 ```mermaid
 flowchart TD
-    A[Understand the request] --> B[Break it into capabilities]
-    B --> C[Search relevant sources]
-    C --> D[Verify primary evidence]
-    D --> E[Compare projects and licenses]
-    E --> F[Map reusable implementations]
-    F --> G[Recommend a build or reuse path]
-    G --> H{Was implementation authorized?}
-    H -- No --> I[Present findings and wait]
-    H -- Yes, end to end --> J[Build only the identified gaps]
+    A[User request] --> B[Understand requirements]
+    B --> C[Decompose capabilities]
+    C --> D[Discover candidate projects]
+    D --> E[Inspect primary sources]
+    E --> F[Compare features, architecture, and licenses]
+    F --> G[Build implementation reuse map]
+    G --> H{Choose a path}
+    H --> I[Use, fork, integrate, harvest, or adapt]
+    H --> J[Build genuine gaps]
+    I --> K[Present findings before coding]
+    J --> K
 ```
 
-Search is bounded by default (six initial queries, five candidates, eight primary sources). The skill reports scope and limitations; it never claims exhaustive internet coverage. Discovery is read-only and candidate content is treated as untrusted input.
+## Features
 
-## Example
+| Step | What the skill guides the agent to do |
+|---|---|
+| Understand | Identify users, capabilities, constraints, and assumptions. |
+| Discover | Search relevant code hosts, packages, and official documentation. |
+| Verify | Inspect primary sources and distinguish implemented, partial, planned, and unknown. |
+| Compare | Review features, architecture, stack, deployment, maintenance evidence, and license. |
+| Map reuse | Name source-backed components, integration routes, risks, and remaining work. |
+| Recommend | Choose USE EXISTING, FORK, INTEGRATE, HARVEST, ADAPT, or BUILD FROM SCRATCH. |
 
-Suppose a user wants a self-hosted team knowledge base with login, Markdown editing, full-text search, and file attachments. A generic search summary might return three project names. ReuseAtlas instead checks which capabilities each project actually implements and produces a map such as:
+## See ReuseAtlas in action
 
-| Capability | Candidate evidence | Reuse route | Recommendation |
-|---|---|---|---|
-| Markdown editor | Inspected editor package and documented API | Dependency | Integrate after checking framework compatibility |
-| Full-text search | Search module found in repository source | Source component or service | Verify indexing and license before adoption |
-| Authentication | Candidate documents OIDC, but implementation was not inspected | Unknown | Do not count as available yet |
-| Attachments | No suitable inspected implementation | Build gap | Design storage and access control |
+The original request was:
 
-This table is illustrative, not a claim about named projects. Actual reports link to the evidence inspected and close with one explicit recommendation.
+> I want to build a self-hosted URL shortener with custom domains, analytics, QR codes, user authentication and an admin dashboard. Use ReuseAtlas first. Search for existing open-source projects, inspect their actual implementations, compare their features, technology stacks and licenses, and show exactly what we can reuse. Do not start coding yet. Complete the research and present the findings first.
 
-## Install
+The discovery compared four public projects:
 
-The canonical skill is `skills/reuse-atlas/` in this repository. Copy the folder to a host's skill directory.
+| Project | What the research found | License |
+|---|---|---|
+| [Kutt](https://github.com/thedevs-network/kutt) | README documents custom domains, link management, private statistics, OIDC login, user management, an admin page, REST API, and self-hosting. | MIT |
+| [Shlink](https://github.com/shlinkio/shlink) | REST API, CLI, domain-aware links, visit tracking, API-key authentication, and separate web clients. In v5, the old `/{shortCode}/qr-code` route was removed; QR generation remains available in client-side logic. | MIT |
+| [Dub](https://github.com/dubinc/dub.link) | TypeScript monorepo with a Next.js application and link-management API; the repository has AGPLv3 content and specified enterprise-licensed paths. | Mixed; inspect files individually |
+| [YOURLS](https://github.com/YOURLS/YOURLS) | PHP shortener with admin interface, statistics, API, plugin hooks, and community QR-code plugins. | MIT |
 
-### Codex
+### Capability snapshot
 
-Global installation:
+“Unknown” means the reviewed evidence did not establish the implementation. README claims are documented capabilities, not source-verified code paths.
+
+| Capability | Kutt | Shlink | Dub | YOURLS |
+|---|---|---|---|---|
+| Self-hosting | Available | Available | Available | Available |
+| Custom domains | Available, documented | Available | Available, documented | Partial; own domain supported, multi-domain management not verified |
+| Analytics | Available, documented | Available | Available, documented | Available |
+| QR codes | Unknown in reviewed source | Partial; old endpoint removed in v5, client logic remains | Unknown in reviewed source | Partial; community plugins |
+| User authentication | Available, documented (OIDC) | Partial; API-key authentication, not end-user login | Available, documented | Partial; private admin login, multi-user model not verified |
+| Admin dashboard | Available, documented | Partial; separate web client | Available, documented | Available |
+| API | Available | Available | Available | Available |
+
+### Reuse map and recommendation
+
+- **Kutt — provisional application base.** Its README covers the broadest match to the requested app. Before forking or copying components, inspect the actual auth, authorization, dashboard, and data-model files; the demo did not verify all those implementation paths.
+- **Shlink — API and visit-analytics reference.** Its v5 upgrade notes are the primary source for the QR endpoint change. Do not interpret endpoint removal as proof that every QR-generation capability disappeared.
+- **YOURLS — plugin-extension reference.** Its plugin catalog documents QR plugins; this is an extension-pattern reference rather than verified core QR code to copy.
+- **Dub — architectural reference.** Review its mixed license at file level before any reuse.
+
+The report's verdict was **ADAPT Kutt**, with these remaining tasks: verify Kutt's auth and authorization implementation; add or confirm QR generation; define custom-domain ownership and verification; decide analytics detail and privacy requirements; and identify missing admin operations.
+
+**Evidence limit:** Kutt's specific README claims were recorded as documented capabilities. The demo did not establish code-level reuse paths for all capabilities, nor did it run any candidate project. Read the [complete research report](docs/examples/url-shortener-discovery.md) for source links, architecture notes, license detail, gaps, and evidence limitations.
+
+> This is a real Codex Desktop demonstration from 27 November 2026. The skill was explicitly invoked. It demonstrates the discovery and reporting workflow; it does not certify automatic activation, exhaustive discovery, or source-level verification of every candidate capability.
+
+## Installation
+
+Copy `skills/reuse-atlas/` into the host's skill discovery directory. Restart the agent or open a fresh session if it does not discover the skill.
+
+### Codex — global
+
+**Linux / macOS:**
 
 ```sh
 mkdir -p ~/.agents/skills
 cp -R skills/reuse-atlas ~/.agents/skills/reuse-atlas
 ```
 
-Project-local installation: copy it to `<project>/.agents/skills/reuse-atlas/`.
+**Windows PowerShell** (from the cloned repository):
 
-### Claude Code
-
-Global installation:
-
-```sh
-mkdir -p ~/.claude/skills
-cp -R skills/reuse-atlas ~/.claude/skills/reuse-atlas
+```powershell
+New-Item -ItemType Directory -Force "$HOME\.agents\skills" | Out-Null
+Copy-Item -Path ".\skills\reuse-atlas" -Destination "$HOME\.agents\skills\reuse-atlas" -Recurse -Force
 ```
 
-Project-local installation: copy it to `<project>/.claude/skills/reuse-atlas/`.
+### Claude Code — global
 
-On Windows, use the equivalent copy command in PowerShell. Keep the folder name `reuse-atlas` so it matches the skill metadata.
+**Linux / macOS:** `mkdir -p ~/.claude/skills && cp -R skills/reuse-atlas ~/.claude/skills/reuse-atlas`
 
-### Other Agent Skills hosts
+**Windows PowerShell:**
 
-Copy the same folder into the host's documented skill discovery directory, or include the `SKILL.md` instructions manually where the host has no skill loader. Discovery directories and automatic activation vary by host.
+```powershell
+New-Item -ItemType Directory -Force "$HOME\.claude\skills" | Out-Null
+Copy-Item -Path ".\skills\reuse-atlas" -Destination "$HOME\.claude\skills\reuse-atlas" -Recurse -Force
+```
 
-## Use
+For project-local installation, Codex uses `.agents/skills/` and Claude Code uses `.claude/skills/`. Other Agent Skills hosts may use different locations; follow their documentation.
 
-Ask for a project or substantial feature, for example:
+### Try it
 
-> Use ReuseAtlas before we build a self-hosted URL shortener. Compare existing implementations and show exactly what we can integrate.
+```text
+Use ReuseAtlas before we build a self-hosted URL shortener. Compare existing implementations and show what we can reuse, with source evidence and license notes.
+```
 
-The skill conducts research and reports a decision before implementation. Autonomous implementation continues only when the user has already authorized end-to-end work.
+## Supported agents
 
-## Optional GitHub search fallback
+Agent Skills is a portable folder format, but discovery and behavior depend on each host. Compatibility claims below reflect observed checks only.
 
-Native search and repository-reading tools are preferred. If a host lacks them, the optional helper can return structured repository metadata from GitHub's public Search API. It does not clone or execute candidate code and makes no network request until explicitly run.
+| Host | Status |
+|---|---|
+| Codex CLI | Discovery and activation exercised across 14 read-only scenarios on `0.171.0-alpha.13.2`; one fresh-session automatic-activation run also succeeded on 27 November 2026. Some evidence-depth cases were partial. This does not certify other versions or app surfaces. See [evaluation results](evals/results.md). |
+| Codex Desktop | One explicitly invoked real-world discovery demonstration; build and model were not captured. Automatic activation is not established. |
+| Claude Code | Installation path documented; activation remains unverified because the CLI required sign-in during the prior check. |
+| Other Agent Skills hosts | Not tested. |
+
+## Optional GitHub metadata helper
+
+Native host search tools remain the preferred discovery route. If repository search is unavailable, the Python 3.10+ helper can query GitHub's Search API:
 
 ```sh
 python skills/reuse-atlas/scripts/github_search.py "self-hosted URL shortener" --limit 10
 ```
 
-Set `GITHUB_TOKEN` in the environment to use an optional token and GitHub's authenticated rate limits. Never place tokens in source files or command history. The helper only searches GitHub; inspect primary sources and other relevant ecosystems separately. A failed request exits nonzero and emits a JSON error to stderr.
+It returns repository metadata as JSON. It does not inspect implementations, rank code quality, or replace source and license review. An optional `GITHUB_TOKEN` environment variable can raise the rate limit; never hardcode a token.
 
-## Scope and limitations
+## Evaluations
 
-- Results depend on the host's search coverage, available source access, and the bounded research budget.
-- Search results and repository metadata are discovery leads, not proof that a feature works.
-- Compatibility, production readiness, security, and license fit require human judgment and project-specific verification.
-- The GitHub helper reports metadata only; it is not a quality score or exhaustive search.
-- **Codex CLI:** automatic discovery and activation were exercised in Codex CLI `0.171.0-alpha.13.2` across 14 read-only scenarios. Several evidence-depth cases remain partial; see the [evaluation record](evals/results.md). This is one configuration, not a guarantee across Codex versions or app surfaces.
-- **Claude Code:** the skill was copied to the documented global directory and Claude Code `2.1.329` was present, but its CLI required sign-in. Activation was not behaviorally verified.
-- Other Agent Skills hosts are expected to work where their loader follows the format, but have not been tested here. Host support and installation paths vary.
-- License notes are informational and are not legal advice.
+- [Behavioral scenarios](evals/cases.md) — manual prompts and review rubric.
+- [Observed results](evals/results.md) — actual host runs, including limitations and partial outcomes.
+- [Ecosystem comparison](docs/differentiation.md) — bounded review of adjacent projects.
+- [Real URL-shortener demonstration](docs/examples/url-shortener-discovery.md) — full research report.
+- [Launch drafts](docs/launch/launch-kit.md) — audience-specific announcement drafts, not posted.
 
-This repository is published as **`1.0.0-rc.1`** while source-level evidence and license-citation behavior receive further validation. Do not interpret the release candidate as cross-agent behavioral certification.
+## Limitations
+
+- Findings depend on host search tools, accessible sources, and a bounded research budget; discovery is not exhaustive.
+- README claims and repository metadata do not prove that a feature works. Verify candidate source, releases, and license before adoption.
+- The skill provides research guidance, not a security audit, legal opinion, or compatibility guarantee.
+- Claude Code and other hosts need behavioral validation in authenticated environments.
 
 ## Development
 
-Requirements: Python 3.10+ for the helper; the tests use only the Python standard library.
+Python 3.10+ is required for the optional helper. Tests use the standard library.
 
 ```sh
 python skills/reuse-atlas/scripts/validate_skill.py
 python -m unittest discover -s tests -v
+python -m compileall -q skills/reuse-atlas/scripts tests
 ```
 
-The checks validate skill structure and helper behavior. Behavioral evaluations require running the scenarios in [`evals/cases.md`](evals/cases.md) with real agent hosts and recording evidence; these have not been claimed as passed.
+See [CONTRIBUTING.md](CONTRIBUTING.md) for the branch and pull-request workflow. Report vulnerabilities privately as described in [SECURITY.md](SECURITY.md). Release history is in [CHANGELOG.md](CHANGELOG.md).
 
-## Contributing and security
+## Maintainer
 
-See [CONTRIBUTING.md](CONTRIBUTING.md) for local checks and contribution guidance, and [SECURITY.md](SECURITY.md) to report a vulnerability. Please review any external repository before adapting its code and honor its license.
+Created and maintained by **Gorav Gumber** · [GitHub profile](https://github.com/goravgumber).
 
 ## License
 
-ReuseAtlas is released under the [MIT License](LICENSE).
+ReuseAtlas is released under the [MIT License](LICENSE). Copyright © 2026 Gorav Gumber.
