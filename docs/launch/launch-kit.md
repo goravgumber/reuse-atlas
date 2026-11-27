@@ -20,7 +20,7 @@ It has been tested with Codex, with some evidence-depth cases still partial. Cla
 
 Repo: https://github.com/goravgumber/reuse-atlas
 Demo: [URL-shortener report](https://github.com/goravgumber/reuse-atlas/blob/develop/docs/examples/url-shortener-discovery.md)
-Install (Codex, from the repo): `mkdir -p ~/.agents/skills && cp -R skills/reuse-atlas ~/.agents/skills/reuse-atlas`. The README has PowerShell and Claude Code paths.  
+Install (Codex, from the repo): `mkdir -p ~/.agents/skills && cp -R skills/reuse-atlas ~/.agents/skills/reuse-atlas`. The README has PowerShell and Claude Code paths.
 Release candidates: https://github.com/goravgumber/reuse-atlas/releases
 
 Please follow each subreddit’s self-promotion and project-posting rules; share only where this kind of post is welcome.
@@ -39,7 +39,7 @@ Current evidence: tested with Codex; some source-depth cases remain partial. Cla
 
 Repo: https://github.com/goravgumber/reuse-atlas
 Demo: https://github.com/goravgumber/reuse-atlas/blob/develop/docs/examples/url-shortener-discovery.md
-Install (Codex, from the repo): `mkdir -p ~/.agents/skills && cp -R skills/reuse-atlas ~/.agents/skills/reuse-atlas`. Windows and Claude Code steps are in the README.  
+Install (Codex, from the repo): `mkdir -p ~/.agents/skills && cp -R skills/reuse-atlas ~/.agents/skills/reuse-atlas`. Windows and Claude Code steps are in the README.
 Release candidates: https://github.com/goravgumber/reuse-atlas/releases
 
 ## Dev.to
@@ -80,7 +80,7 @@ It has been tested with Codex; some evidence-depth cases remain partial. Claude 
 
 Project: https://github.com/goravgumber/reuse-atlas
 Demo report: https://github.com/goravgumber/reuse-atlas/blob/develop/docs/examples/url-shortener-discovery.md
-Install (Codex, from the repo): `mkdir -p ~/.agents/skills && cp -R skills/reuse-atlas ~/.agents/skills/reuse-atlas`. See the README for Windows and Claude Code.  
+Install (Codex, from the repo): `mkdir -p ~/.agents/skills && cp -R skills/reuse-atlas ~/.agents/skills/reuse-atlas`. See the README for Windows and Claude Code.
 Release candidates: https://github.com/goravgumber/reuse-atlas/releases
 
 ## X
