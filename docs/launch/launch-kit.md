@@ -20,6 +20,7 @@ It has been tested with Codex, with some evidence-depth cases still partial. Cla
 
 Repo: https://github.com/goravgumber/reuse-atlas
 Demo: [URL-shortener report](https://github.com/goravgumber/reuse-atlas/blob/develop/docs/examples/url-shortener-discovery.md)
+Install (Codex, from the repo): `mkdir -p ~/.agents/skills && cp -R skills/reuse-atlas ~/.agents/skills/reuse-atlas`. The README has PowerShell and Claude Code paths.  
 Release candidates: https://github.com/goravgumber/reuse-atlas/releases
 
 Please follow each subreddit’s self-promotion and project-posting rules; share only where this kind of post is welcome.
@@ -38,6 +39,7 @@ Current evidence: tested with Codex; some source-depth cases remain partial. Cla
 
 Repo: https://github.com/goravgumber/reuse-atlas
 Demo: https://github.com/goravgumber/reuse-atlas/blob/develop/docs/examples/url-shortener-discovery.md
+Install (Codex, from the repo): `mkdir -p ~/.agents/skills && cp -R skills/reuse-atlas ~/.agents/skills/reuse-atlas`. Windows and Claude Code steps are in the README.  
 Release candidates: https://github.com/goravgumber/reuse-atlas/releases
 
 ## Dev.to
@@ -64,6 +66,8 @@ Install and inspect the skill: https://github.com/goravgumber/reuse-atlas
 Read the full demo: https://github.com/goravgumber/reuse-atlas/blob/develop/docs/examples/url-shortener-discovery.md
 Release candidates: https://github.com/goravgumber/reuse-atlas/releases
 
+For Codex, clone the repository, then run `mkdir -p ~/.agents/skills && cp -R skills/reuse-atlas ~/.agents/skills/reuse-atlas` from its root. The [README installation section](https://github.com/goravgumber/reuse-atlas#installation) includes Windows PowerShell and Claude Code instructions.
+
 ## LinkedIn
 
 I’ve been working on a small open-source project addressing a common step missing from AI-assisted development: checking what already exists before building.
@@ -76,6 +80,7 @@ It has been tested with Codex; some evidence-depth cases remain partial. Claude 
 
 Project: https://github.com/goravgumber/reuse-atlas
 Demo report: https://github.com/goravgumber/reuse-atlas/blob/develop/docs/examples/url-shortener-discovery.md
+Install (Codex, from the repo): `mkdir -p ~/.agents/skills && cp -R skills/reuse-atlas ~/.agents/skills/reuse-atlas`. See the README for Windows and Claude Code.  
 Release candidates: https://github.com/goravgumber/reuse-atlas/releases
 
 ## X
@@ -85,6 +90,8 @@ Coding agents can start building before checking what already exists. ReuseAtlas
 Real demo: a self-hosted URL shortener compared Kutt, Shlink, Dub, and YOURLS; provisional verdict: ADAPT Kutt. Some implementation paths still need verification. Tested with Codex; Claude activation unverified.
 
 https://github.com/goravgumber/reuse-atlas
+
+Install (Codex, from the repo): `mkdir -p ~/.agents/skills && cp -R skills/reuse-atlas ~/.agents/skills/reuse-atlas`. Windows and Claude Code steps: https://github.com/goravgumber/reuse-atlas#installation
 
 ## Posting checklist
 

@@ -59,7 +59,9 @@ flowchart TD
 
 ## See ReuseAtlas in action
 
-The real test request was: **“I want to build a self-hosted URL shortener with custom domains, analytics, QR codes, user authentication and an admin dashboard.”** It asked the agent to research and present findings before coding.
+The original request was:
+
+> I want to build a self-hosted URL shortener with custom domains, analytics, QR codes, user authentication and an admin dashboard. Use ReuseAtlas first. Search for existing open-source projects, inspect their actual implementations, compare their features, technology stacks and licenses, and show exactly what we can reuse. Do not start coding yet. Complete the research and present the findings first.
 
 The discovery compared four public projects:
 
