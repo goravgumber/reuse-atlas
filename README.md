@@ -94,8 +94,12 @@ Set `GITHUB_TOKEN` in the environment to use an optional token and GitHub's auth
 - Search results and repository metadata are discovery leads, not proof that a feature works.
 - Compatibility, production readiness, security, and license fit require human judgment and project-specific verification.
 - The GitHub helper reports metadata only; it is not a quality score or exhaustive search.
-- Agent Skills support and installation paths vary. This release was structurally validated and its scripts tested locally; host-specific automatic activation has not been manually verified.
+- **Codex CLI:** automatic discovery and activation were exercised in Codex CLI `0.171.0-alpha.13.2` across 14 read-only scenarios. Several evidence-depth cases remain partial; see the [evaluation record](evals/results.md). This is one configuration, not a guarantee across Codex versions or app surfaces.
+- **Claude Code:** the skill was copied to the documented global directory and Claude Code `2.1.329` was present, but its CLI required sign-in. Activation was not behaviorally verified.
+- Other Agent Skills hosts are expected to work where their loader follows the format, but have not been tested here. Host support and installation paths vary.
 - License notes are informational and are not legal advice.
+
+This repository is published as **`1.0.0-rc.1`** while source-level evidence and license-citation behavior receive further validation. Do not interpret the release candidate as cross-agent behavioral certification.
 
 ## Development
 
