@@ -4,8 +4,9 @@ Changes to this project are documented here.
 
 ## Unreleased
 
-- Redesign the README around an evidence-backed sample report, real project badges, and cross-platform installation instructions.
-- Correct the MIT copyright display name to Gorav Gumber.
+- Replace the fictional product example with a documented Codex Desktop URL-shortener discovery demonstration.
+- Add evaluation records for the real-world demonstration (E15) and an unrun automatic-activation scenario (E16).
+- Add audience-specific open-source launch drafts and make supporting documentation easier to find.
 
 ## 1.0.0-rc.1 — 2026-11-27
 
