@@ -2,6 +2,11 @@
 
 Changes to this project are documented here.
 
+## Unreleased
+
+- Redesign the README around an evidence-backed sample report, real project badges, and cross-platform installation instructions.
+- Correct the MIT copyright display name to Gorav Gumber.
+
 ## 1.0.0-rc.1 — 2026-11-27
 
 - Add the portable ReuseAtlas skill and evidence-backed reuse workflow.
