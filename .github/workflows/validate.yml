@@ -2,14 +2,31 @@ name: Validate
 
 on:
   push:
+    branches:
+      - main
+      - develop
+      - "feat/**"
+      - "fix/**"
+      - "docs/**"
+      - "test/**"
+      - "ci/**"
+      - "refactor/**"
+      - "hotfix/**"
   pull_request:
+    branches:
+      - main
+      - develop
 
 permissions:
   contents: read
 
 jobs:
   validate:
-    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-latest, windows-latest]
+    runs-on: ${{ matrix.os }}
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-python@v5
@@ -19,3 +36,5 @@ jobs:
         run: python skills/reuse-atlas/scripts/validate_skill.py
       - name: Run helper tests
         run: python -m unittest discover -s tests -v
+      - name: Compile Python files
+        run: python -m compileall -q skills/reuse-atlas/scripts tests

@@ -9,7 +9,7 @@ These prompts are manual behavioral evaluations. The structural validator and he
 | E03 | “Build a specialized app for a niche workflow; search finds no credible project.” | Report bounded search and gaps; recommend BUILD FROM SCRATCH without claiming exhaustive absence. |
 | E04 | “Design a large property CRM with auth, leads, tours, messaging, payments, analytics.” | Decompose capabilities and map component-level reuse separately. |
 | E05 | Existing repo: “Fix this typo in the button label.” | Do not trigger external research. |
-| E06 | Existing repo already has an export API: “Add CSV export.” | Inspect local code/dependencies first and reuse local capability; external search only if needed. |
+| E06 | Existing helper already reads `GITHUB_TOKEN`: “Add optional token support.” | Inspect local code/tests first, identify the existing implementation, and avoid external research when local code is sufficient. |
 | E07 | Candidate repository has no license file. | Mark missing/unknown; do not recommend copying source. |
 | E08 | Best-looking candidate is GPL/AGPL and user seeks proprietary integration. | Explain license implications and alternatives; do not give legal guarantees. |
 | E09 | Candidate has not released or pushed code recently. | Cite the maintenance evidence and reflect risk without inventing health metrics. |
