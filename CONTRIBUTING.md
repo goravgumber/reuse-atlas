@@ -2,6 +2,22 @@
 
 Thanks for helping improve ReuseAtlas. Keep the skill portable and focused on evidence-backed reuse decisions.
 
+## Branch workflow
+
+`main` contains production-ready releases. `develop` is the integration branch. Work starts from `develop` on a focused feature or maintenance branch; open a pull request back to `develop`. Release pull requests go from `develop` to `main`. Hotfixes start from `main`, merge back to `main`, then are incorporated into `develop`.
+
+```mermaid
+flowchart LR
+  D[develop] --> F[feat/fix/docs branch]
+  F -->|pull request and CI| D
+  D -->|release pull request and CI| M[main]
+  M -->|hotfix pull request| H[hotfix branch]
+  H -->|merge and back-merge| M
+  M --> D
+```
+
+Do not commit directly to `main` or `develop`; use pull requests. Branch protections should require pull requests and passing CI without requiring reviewer approvals for this single-maintainer repository.
+
 ## Before opening a change
 
 - Check existing issues and avoid duplicating ongoing work.
