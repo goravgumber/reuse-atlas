@@ -2,10 +2,10 @@
 
 Changes to this project are documented here.
 
-## 0.1.0 — 2026-11-27
+## 1.0.0-rc.1 — 2026-11-27
 
 - Add the portable ReuseAtlas skill and evidence-backed reuse workflow.
-- Document bounded discovery, implementation status, license and safety handling, reuse maps, and the implementation gate.
-- Add an optional standard-library GitHub repository search helper.
-- Add structural validation, helper unit tests, and representative manual evaluation scenarios.
-- Prepare MIT release documentation and CI validation.
+- Add the optional standard-library GitHub metadata fallback.
+- Add structural validation, helper unit tests, fourteen behavioral evaluation scenarios, and recorded Codex results.
+- Add cross-platform Linux and Windows CI and document the protected `main` / `develop` workflow.
+- Record the Codex configuration tested and the Claude Code sign-in blocker; known partial evaluations remain documented.
