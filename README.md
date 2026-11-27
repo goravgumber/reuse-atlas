@@ -8,7 +8,7 @@ Discover what's already built before your AI agent starts coding.
 
 An open-source, research-first Agent Skill for comparing existing implementations and deciding what to reuse before building a substantial project.
 
-[![GitHub stars](https://img.shields.io/github/stars/goravgumber/reuse-atlas?style=social)](https://github.com/goravgumber/reuse-atlas/stargazers)
+[![GitHub stars](https://img.shields.io/github/stars/goravgumber/reuse-atlas?style=social)](https://github.com/goravgumber/reuse-atlas)
 [![GitHub forks](https://img.shields.io/github/forks/goravgumber/reuse-atlas?style=social)](https://github.com/goravgumber/reuse-atlas/forks)
 [![Release](https://img.shields.io/github/v/release/goravgumber/reuse-atlas?include_prereleases&label=release)](https://github.com/goravgumber/reuse-atlas/releases)
 [![MIT License](https://img.shields.io/github/license/goravgumber/reuse-atlas)](LICENSE)
